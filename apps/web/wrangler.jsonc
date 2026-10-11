@@ -1,0 +1,16 @@
+// Cloudflare Workers deployment of the studio app (built by @opennextjs/cloudflare).
+// Secrets (AUTH_SECRET, AUTH_PASSWORD, ...) are set in the Cloudflare dashboard or
+// with `npx wrangler secret put`, never here.
+{
+  "name": "interior-studio",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Keep variables added in the dashboard across deploys.
+  "keep_vars": true,
+  "observability": { "enabled": true }
+}

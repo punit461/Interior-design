@@ -205,6 +205,12 @@ drift from the product — re-run `npm run record:manual` after a UI change.
 - **Storage service:** `uvicorn app.main:app --host 0.0.0.0 --port 8000` from `backend/`. Set `API_TOKEN` to the
   same value as the app, `DATABASE_URL` to Postgres for anything beyond one machine, and keep it on a private
   network: the browser never calls it directly, so it needs no public address.
+- **Cloudflare Workers (studio app):** `apps/web` is set up for [OpenNext](https://opennext.js.org/cloudflare)
+  (`wrangler.jsonc`, `open-next.config.ts`). In Workers Builds use root directory `apps/web`, build command
+  `cd ../.. && npm ci && cd apps/web && npx opennextjs-cloudflare build` and deploy command
+  `npx opennextjs-cloudflare deploy`, then add `AUTH_SECRET` and `AUTH_PASSWORD` as secrets. From a machine with
+  wrangler logged in, `npm run deploy:cf` does the same. The FastAPI storage service does not run on Workers; without
+  `API_ORIGIN` the app stays in browser-storage mode.
 - **Marketing site:** `VITE_SITE_URL=https://yourdomain VITE_APP_URL=https://app.yourdomain npm run build:site`
   and serve `apps/site/dist` from any static host. Configure the host to serve `404.html` for unknown paths.
 - **Known limits:** one account (multi-user is the next step), and share links cannot be revoked before their
